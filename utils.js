@@ -14,13 +14,14 @@ const isDataNotEmpty = (data) => {
 }
 
 // calculate the end date of a vod
-const calculateVodEndDate = (date, arr) => {
-    return date.addTime(arr[0], arr[1], arr[2])
+const addTimeToDate = (date, arr) => {
+    return date.addTime(...arr)
 }
 
 // returns the difference between 2 dates in hours, minutes, seconds
 const dateDiff = (date1, date2) => {
-    let ms = new Date(Math.abs(date1 - date2))
+    // subtract 30 seconds to account for the delay when creating a clip
+    let ms = new Date(Math.abs(date1 - date2 - 30000))
 
     let s = Math.floor(ms / 1000)
     let m = Math.floor(s / 60)
@@ -31,4 +32,4 @@ const dateDiff = (date1, date2) => {
     return { h, m, s }
 }
 
-module.exports = { isUrlValid, isDataNotEmpty, calculateVodEndDate, dateDiff }
+module.exports = { isUrlValid, isDataNotEmpty, addTimeToDate, dateDiff }
