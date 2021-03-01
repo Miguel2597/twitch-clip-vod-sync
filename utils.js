@@ -13,15 +13,14 @@ const isDataNotEmpty = (data) => {
     return data.length !== 0
 }
 
-// calculate the end date of a vod
+// add hours, minutes, seconds to a date
 const addTimeToDate = (date, arr) => {
     return date.addTime(...arr)
 }
 
 // returns the difference between 2 dates in hours, minutes, seconds
 const dateDiff = (date1, date2) => {
-    // subtract 30 seconds to account for the delay when creating a clip
-    let ms = new Date(Math.abs(date1 - date2 - 30000))
+    let ms = new Date(Math.abs(date1 - date2))
 
     let s = Math.floor(ms / 1000)
     let m = Math.floor(s / 60)

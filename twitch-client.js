@@ -1,7 +1,7 @@
 const axios = require('axios')
 const utils = require('./utils')
 
-// create an axios instance with predefined headers and base url
+// create an axios instance to use the twitch api
 const instance = axios.create({
     baseURL: process.env.BASE_URL,
     headers: {
@@ -10,7 +10,17 @@ const instance = axios.create({
     }
 })
 
-// get the streamer id based on the username passed as parameter
+// create another axios instance to use the old twitch api to get a vod timestamp through a clip
+// the new twitch api does not provide this info
+const instance2 = axios.create({
+    baseURL: process.env.BASE_URL_2,
+    headers: {
+        'Accept': 'application/vnd.twitchtv.v5+json',
+        'Client-ID': process.env.CLIENT_ID
+    }
+})
+
+// get the streamer id and display name based on the username passed as parameter
 const getStreamerInfo = async (username) => {
     // send request to /users endpoint to get the data for the specified username
     const userData = await instance.get(`/users?login=${username}`)
@@ -32,12 +42,24 @@ const getClipDate = async (url) => {
     const clipId = url.substring(url.lastIndexOf('/') + 1)
 
     // send request to /clips endpoint to get the data for the specified clip id
-    const clipData = await instance.get(`/clips?id=${clipId}`)
+    const clipData = await instance2.get(`/clips/${clipId}`)
 
-    // check if the clip exists
-    if(!utils.isDataNotEmpty(clipData.data.data)) throw new Error('Clip does not exist')
+    // get the vod
+    const vod = clipData.data.vod
 
-    return clipData.data.data[0]['created_at']
+    // Check if the vod still exists
+    if(!vod) throw new Error('The vod for this clip has been removed')
+
+    // separate the vod timestamp hours, minutes, seconds into an array
+    const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/[hms]+/)
+
+    // send request to /videos endpoint to get the data for the specified vod id
+    const vodInfo = await instance.get(`/videos?id=${vod.id}`)
+
+    // get the vod start date
+    const vodStart = vodInfo.data.data[0]['created_at']
+
+    return utils.addTimeToDate(new Date(vodStart), timeStampArr)
 }
 
 // get the specified's streamer vod timestamp that corresponds to the date of the clip passed as parameter
