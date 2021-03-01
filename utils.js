@@ -10,7 +10,7 @@ const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test
 const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h\d+m\d+s$/.test(url)
 
 // check if data array is not empty
-const isDataNotEmpty = (data) => data.length !== 0
+const isDataEmpty = (data) => data.length === 0
 
 // add hours, minutes, seconds to a date
 const addTimeToDate = (date, arr) => date.addTime(...arr)
@@ -28,4 +28,4 @@ const dateDiff = (date1, date2) => {
     return { h, m, s }
 }
 
-module.exports = { isClipUrlValid, isVodUrlValid, isDataNotEmpty, addTimeToDate, dateDiff }
+module.exports = { isClipUrlValid, isVodUrlValid, isDataEmpty, addTimeToDate, dateDiff }

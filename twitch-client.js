@@ -26,7 +26,7 @@ const getStreamerInfo = async (username) => {
     const userData = await instance.get(`/users?login=${username}`)
 
     // check if the user exists
-    if(!utils.isDataNotEmpty(userData.data.data)) throw new Error('User does not exist')
+    if(utils.isDataEmpty(userData.data.data)) throw new Error('User does not exist')
 
     const { id, display_name } = userData.data.data[0]
 
@@ -80,7 +80,7 @@ const getSyncedVod= async (streamerInfo, exactDate) => {
     const vodsData = await instance.get(`/videos?user_id=${streamerInfo.id}`)
 
     // check if the streamer has any vods
-    if(!utils.isDataNotEmpty(vodsData.data.data)) throw new Error(`${streamerInfo.display_name} does not have any available VODs`)
+    if(utils.isDataEmpty(vodsData.data.data)) throw new Error(`${streamerInfo.display_name} does not have any available VODs`)
 
     const vod = findVod(vodsData.data.data, exactDate)
 

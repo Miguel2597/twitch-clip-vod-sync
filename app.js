@@ -10,6 +10,7 @@ const vod = async (url, username) => {
         const streamerInfo = await twitchClient.getStreamerInfo(username)
         const exactDate = await twitchClient.getExactDate(url)
         const finalVod = await twitchClient.getSyncedVod(streamerInfo, exactDate)
+        
         console.log(finalVod)
     }catch(err){
         console.log(err.message)
