@@ -34,12 +34,12 @@ const getStreamerInfo = async (username) => {
 }
 
 // get the creation date of the clip based on the clip url passed as parameter
-const getClipDate = async (url) => {
+const getClipDate = async (clipUrl) => {
     // check if url is valid
-    if(!utils.isUrlValid(url)) throw new Error('Invalid url')
+    if(!utils.isUrlValid(clipUrl)) throw new Error('Invalid url')
 
     // extract clip id from the url
-    const clipId = url.substring(url.lastIndexOf('/') + 1)
+    const clipId = clipUrl.substring(clipUrl.lastIndexOf('/') + 1)
 
     // send request to /clips endpoint to get the data for the specified clip id
     const clipData = await instance2.get(`/clips/${clipId}`)

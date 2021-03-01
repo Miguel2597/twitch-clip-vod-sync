@@ -12,4 +12,4 @@ const vod = async (clipUrl, username) => {
     }
 }
 
-vod('https://clips.twitch.tv/DignifiedScaryPotatoWow-zQDtvmMEwI7ipl-J', 'xqcow')
+vod('https://clips.twitch.tv/DeliciousRoundHeronANELE-8ih31js816okhmo7', 'koil')

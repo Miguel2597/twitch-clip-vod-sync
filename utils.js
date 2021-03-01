@@ -4,23 +4,17 @@ Date.prototype.addTime = function(h, m, s){
 }
 
 // check if url matches regex expression
-const isUrlValid = (url) => {
-    return /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
-}
+const isUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
 
 // check if data array is not empty
-const isDataNotEmpty = (data) => {
-    return data.length !== 0
-}
+const isDataNotEmpty = (data) => data.length !== 0
 
 // add hours, minutes, seconds to a date
-const addTimeToDate = (date, arr) => {
-    return date.addTime(...arr)
-}
+const addTimeToDate = (date, arr) => date.addTime(...arr)
 
 // returns the difference between 2 dates in hours, minutes, seconds
 const dateDiff = (date1, date2) => {
-    let ms = new Date(Math.abs(date1 - date2))
+    let ms = Math.abs(date1 - date2)
 
     let s = Math.floor(ms / 1000)
     let m = Math.floor(s / 60)
