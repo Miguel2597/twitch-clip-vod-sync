@@ -33,25 +33,33 @@ const getStreamerInfo = async (username) => {
     return { id, display_name }
 }
 
-// get the creation date of the clip based on the clip url passed as parameter
-const getClipDate = async (clipUrl) => {
-    // check if url is valid
-    if(!utils.isUrlValid(clipUrl)) throw new Error('Invalid url')
+// get the exact date of when a clip/vod happened
+// if the url is a clip, get the vod timestamp of when the clip happened and use it to get the exact date
+// if the url is a vod, get the the vod timestamp and use it to get the exact date
+const getExactDate = async (url) => {
+    const vod = {}
 
-    // extract clip id from the url
-    const clipId = clipUrl.substring(clipUrl.lastIndexOf('/') + 1)
+    if(url.includes('clips')){
+        // extract clip id from the url
+        const clipId = url.substring(url.lastIndexOf('/') + 1)
 
-    // send request to /clips endpoint to get the data for the specified clip id
-    const clipData = await instance2.get(`/clips/${clipId}`)
+        // send request to /clips endpoint to get the data for the specified clip id
+        const clipData = await instance2.get(`/clips/${clipId}`)
 
-    // get the vod
-    const vod = clipData.data.vod
+        // get the vod
+        const vodData = clipData.data.vod
 
-    // Check if the vod still exists
-    if(!vod) throw new Error('The vod for this clip has been removed')
+        // Check if the vod still exists
+        if(!vodData) throw new Error('The vod for this clip has been removed')
 
-    // separate the vod timestamp hours, minutes, seconds into an array
-    const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/[hms]+/)
+        vod.id = vodData.id
+        vod.url = vodData.url
+
+    }else{
+        // extract vod id from the url
+        vod.id = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'))
+        vod.url = url
+    }
 
     // send request to /videos endpoint to get the data for the specified vod id
     const vodInfo = await instance.get(`/videos?id=${vod.id}`)
@@ -59,30 +67,35 @@ const getClipDate = async (clipUrl) => {
     // get the vod start date
     const vodStart = vodInfo.data.data[0]['created_at']
 
+    // separate the vod timestamp hours, minutes, seconds into an array
+    const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/[hms]+/)
+
+    // add the vod timestamp to the start date of the vod
     return utils.addTimeToDate(new Date(vodStart), timeStampArr)
 }
 
 // get the specified's streamer vod timestamp that corresponds to the date of the clip passed as parameter
-const getStreamerVodTimestamp = async (streamerInfo, clipDate) => {
+const getSyncedVod= async (streamerInfo, exactDate) => {
     // send request to /videos endpoint to get the the VODs for the specified streamer
     const vodsData = await instance.get(`/videos?user_id=${streamerInfo.id}`)
 
     // check if the streamer has any vods
     if(!utils.isDataNotEmpty(vodsData.data.data)) throw new Error(`${streamerInfo.display_name} does not have any available VODs`)
 
-    const vod = findVod(vodsData.data.data, clipDate)
+    const vod = findVod(vodsData.data.data, exactDate)
 
     // check if a vod is found
-    if(!vod) throw new Error(`${streamerInfo.display_name} was not streaming at the time of the specified clip`)
+    if(!vod) throw new Error(`${streamerInfo.display_name} was not streaming at the time of the clip/vod`)
 
-    // calculate the difference between the clip date and the vod start date
-    const { h, m, s } = utils.dateDiff(clipDate, vod.startDate)
+    // calculate the difference between the date and the vod start date
+    const { h, m, s } = utils.dateDiff(exactDate, vod.startDate)
     
+    // return the final vod url with the timestamp
     return `${vod.url}?t=${h}h${m}m${s}s`
 }
 
 // find a vod
-const findVod = (vods, clipDate) => {
+const findVod = (vods, exactDate) => {
     for(vod of vods){
         // separate duration hours, minutes, seconds into an array
         const hoursArr = vod.duration.split(/[hms]+/)
@@ -93,8 +106,8 @@ const findVod = (vods, clipDate) => {
         // get the vod end date
         const vodEnd = utils.addTimeToDate(vodStart, hoursArr)
 
-        // if the clip date is in between the start and end dates return vod info
-        if(clipDate.getTime() >= vodStart.getTime() && clipDate.getTime() <= vodEnd.getTime()){
+        // if the date is in between the start and end dates return vod info
+        if(exactDate.getTime() >= vodStart.getTime() && exactDate.getTime() <= vodEnd.getTime()){
             return {
                 url: vod.url,
                 startDate: vodStart
@@ -104,5 +117,5 @@ const findVod = (vods, clipDate) => {
     return false
 }
 
-module.exports = { getClipDate, getStreamerInfo, getStreamerVodTimestamp }
+module.exports = { getExactDate, getStreamerInfo, getSyncedVod }
 

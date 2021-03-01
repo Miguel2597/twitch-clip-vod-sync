@@ -1,15 +1,19 @@
 require('dotenv').config()
 const twitchClient = require('./twitch-client')
+const utils = require('./utils')
 
-const vod = async (clipUrl, username) => {
+const vod = async (url, username) => {
     try{
+        // check if the url is valid
+        if(!utils.isClipUrlValid(url) && !utils.isVodUrlValid(url)) throw new Error('Invalid url')
+
         const streamerInfo = await twitchClient.getStreamerInfo(username)
-        const clipDate = await twitchClient.getClipDate(clipUrl)
-        const finalVod = await twitchClient.getStreamerVodTimestamp(streamerInfo, clipDate)
+        const exactDate = await twitchClient.getExactDate(url)
+        const finalVod = await twitchClient.getSyncedVod(streamerInfo, exactDate)
         console.log(finalVod)
     }catch(err){
         console.log(err.message)
     }
 }
 
-vod('https://clips.twitch.tv/DeliciousRoundHeronANELE-8ih31js816okhmo7', 'koil')
+vod('https://www.twitch.tv/videos/928480589?t=3h48m30s', 'ssaab')

@@ -3,8 +3,11 @@ Date.prototype.addTime = function(h, m, s){
     return new Date(this.getTime() + (h*60*60*1000) + (m*60*1000) + (s*1000))
 }
 
-// check if url matches regex expression
-const isUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
+// check if a clip url matches the regex expression
+const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
+
+// check if a vod url matches the regex expression
+const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h\d+m\d+s$/.test(url)
 
 // check if data array is not empty
 const isDataNotEmpty = (data) => data.length !== 0
@@ -25,4 +28,4 @@ const dateDiff = (date1, date2) => {
     return { h, m, s }
 }
 
-module.exports = { isUrlValid, isDataNotEmpty, addTimeToDate, dateDiff }
+module.exports = { isClipUrlValid, isVodUrlValid, isDataNotEmpty, addTimeToDate, dateDiff }
