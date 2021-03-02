@@ -5,7 +5,7 @@ const utils = require('./utils')
 
 const app = express()
 
-app.get('/clipvodsync', async (req, res) => {
+app.get('/', async (req, res) => {
     try{
         const { url, username } = req.query
 

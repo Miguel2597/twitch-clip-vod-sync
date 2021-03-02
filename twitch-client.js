@@ -74,7 +74,7 @@ const getExactDate = async (url) => {
         const vodStart = vodInfo.data.data[0]['created_at']
     
         // separate the vod timestamp hours, minutes, seconds into an array
-        const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/[hms]+/)
+        const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/\D+/).filter(e => e)
     
         // add the vod timestamp to the start date of the vod
         return utils.addTimeToDate(new Date(vodStart), timeStampArr)
@@ -117,7 +117,7 @@ const getSyncedVod= async (streamerInfo, exactDate) => {
 const findVod = (vods, exactDate) => {
     for(vod of vods){
         // separate duration hours, minutes, seconds into an array
-        const hoursArr = vod.duration.split(/[hms]+/)
+        const hoursArr = vod.duration.split(/\D+/).filter(e => e)
 
         // get the vod start date
         const vodStart = new Date(vod['created_at'])
