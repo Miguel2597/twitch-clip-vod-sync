@@ -28,4 +28,6 @@ const dateDiff = (date1, date2) => {
     return { h, m, s }
 }
 
-module.exports = { isClipUrlValid, isVodUrlValid, isDataEmpty, addTimeToDate, dateDiff }
+const hoursToDays = (hours) => Math.floor(hours / 24)
+
+module.exports = { isClipUrlValid, isVodUrlValid, isDataEmpty, addTimeToDate, dateDiff, hoursToDays }

@@ -73,7 +73,7 @@ describe('utils.js tests', () => {
     })
 
     describe('addTimeToDate() Test', () => {
-        it('should return the correct date', () => {
+        it('should return the date 2021-03-02 00:30:30', () => {
             const date = new Date('2021-03-01T23:10:00Z')
             const result = utils.addTimeToDate(date, [1, 20, 30])
             assert.deepEqual(result, new Date('2021-03-02T00:30:30Z'))
@@ -81,11 +81,18 @@ describe('utils.js tests', () => {
     })
 
     describe('dateDiff() Test', () => {
-        it('should return the correct difference between dates', () => {
+        it('should return { h: 3, m: 19, s: 23 }', () => {
             const date1 = new Date('2021-03-01T17:10:37Z')
             const date2 = new Date('2021-03-01T20:30:00Z')
             const result = utils.dateDiff(date1, date2)
             assert.deepEqual(result, { h: 3, m: 19, s: 23 })
+        })
+    })
+
+    describe('hoursToDays() Test', () => {
+        it('should return 2', () => {
+            const result = utils.hoursToDays(60)
+            assert.strictEqual(result, 2)
         })
     })
 
