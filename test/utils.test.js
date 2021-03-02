@@ -78,6 +78,16 @@ describe('utils.js tests', () => {
             const result = utils.addTimeToDate(date, [1, 20, 30])
             assert.deepEqual(result, new Date('2021-03-02T00:30:30Z'))
         })
+        it('should return the date 2021-03-01 23:30:30', () => {
+            const date = new Date('2021-03-01T23:10:00Z')
+            const result = utils.addTimeToDate(date, [20, 30])
+            assert.deepEqual(result, new Date('2021-03-01T23:30:30Z'))
+        })
+        it('should return the date 2021-03-01 23:10:30', () => {
+            const date = new Date('2021-03-01T23:10:00Z')
+            const result = utils.addTimeToDate(date, [30])
+            assert.deepEqual(result, new Date('2021-03-01T23:10:30Z'))
+        })
     })
 
     describe('dateDiff() Test', () => {

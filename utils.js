@@ -1,8 +1,3 @@
-// Adds hours, minutes and seconds to a date and returns a new Date object 
-Date.prototype.addTime = function(h, m, s){
-    return new Date(this.getTime() + (h*60*60*1000) + (m*60*1000) + (s*1000))
-}
-
 // check if a clip url matches the regex expression
 const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
 
@@ -12,8 +7,14 @@ const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\
 // check if data array is not empty
 const isDataEmpty = (data) => data.length === 0
 
-// add hours, minutes, seconds to a date
-const addTimeToDate = (date, arr) => date.addTime(...arr)
+// Adds hours, minutes and seconds to a date and returns a new Date object 
+const addTimeToDate = (date, arr) => {
+    if(arr.length === 1) return new Date(date.getTime() + (arr[0]*1000))
+
+    if(arr.length === 2) return new Date(date.getTime() + (arr[0]*60*1000) + (arr[1]*1000))
+
+    return new Date(date.getTime() + (arr[0]*60*60*1000) + (arr[1]*60*1000) + (arr[2]*1000))
+}
 
 // returns the difference between 2 dates in hours, minutes, seconds
 const dateDiff = (date1, date2) => {
