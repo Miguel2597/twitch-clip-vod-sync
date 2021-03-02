@@ -87,8 +87,12 @@ const getExactDate = async (url) => {
 // get the vod synced with the date of the clip/vod if the streamer was streaming
 const getSyncedVod= async (streamerInfo, exactDate) => {
     try{
+        // calculate the difference between today's date and the date of the clip/vod so the request only returns the needed number of vods
+        // add + 3 just in case the streamer has more than 1 vod per day
+        const firstVods = utils.hoursToDays(utils.dateDiff(new Date(), exactDate).h) + 3
+
         // send request to /videos endpoint to get the the VODs for the specified streamer
-        const vodsData = await instance.get(`/videos?user_id=${streamerInfo.id}`)
+        const vodsData = await instance.get(`/videos?user_id=${streamerInfo.id}&first=${firstVods}&type=archive`)
 
         // check if the streamer has any vods
         if(utils.isDataEmpty(vodsData.data.data)) throw new Error(`${streamerInfo.display_name} does not have any available VODs`)
