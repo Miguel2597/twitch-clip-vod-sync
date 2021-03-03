@@ -27,14 +27,14 @@ const getStreamerInfo = async (username) => {
         const userData = await instance.get(`/users?login=${username}`)
 
         // check if the user exists
-        if(utils.isDataEmpty(userData.data.data)) throw new Error('User does not exist')
+        if(utils.isDataEmpty(userData.data.data)) throw new Error()
 
         const { id, display_name } = userData.data.data[0]
 
         return { id, display_name }
 
     }catch(err){
-        throw err
+        throw new Error('User does not exist')
     }
 }
 
@@ -56,7 +56,7 @@ const getExactDate = async (url) => {
             const vodData = clipData.data.vod
     
             // Check if the vod still exists
-            if(!vodData) throw new Error('The vod for this clip has been removed')
+            if(!vodData) throw new Error()
     
             vod.id = vodData.id
             vod.url = vodData.url
@@ -80,7 +80,7 @@ const getExactDate = async (url) => {
         return utils.addTimeToDate(new Date(vodStart), timeStampArr)
 
     }catch(err){
-        throw err
+        throw new Error('Clip does not exist or the vod for this clip has been removed')
     }
 }
 
