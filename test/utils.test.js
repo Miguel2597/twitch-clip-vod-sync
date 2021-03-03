@@ -1,5 +1,5 @@
 const { assert } = require('chai')
-const utils = require('../utils')
+const utils = require('../src/utils')
 
 describe('utils.js tests', () => {
     describe('isClipUrlValid() Test', () => {
