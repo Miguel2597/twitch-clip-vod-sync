@@ -4,7 +4,7 @@ const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test
 // check if a vod url matches the regex expression
 const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h\d+m\d+s$/.test(url)
 
-// check if data array is not empty
+// check if array is empty
 const isDataEmpty = (data) => data.length === 0
 
 // Adds hours, minutes and seconds to a date and returns a new Date object 
@@ -29,6 +29,7 @@ const dateDiff = (date1, date2) => {
     return { h, m, s }
 }
 
+// convert hours to days
 const hoursToDays = (hours) => Math.floor(hours / 24)
 
 module.exports = { isClipUrlValid, isVodUrlValid, isDataEmpty, addTimeToDate, dateDiff, hoursToDays }

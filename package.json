@@ -2,10 +2,10 @@
   "name": "twitch-clip-vod-sync",
   "version": "1.0.0",
   "description": "Synchronises a Twitch clip/VOD to another streamers VOD if that streamer was live at the exact moment in time of the respective clip/VOD.",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node src/app",
+    "dev": "nodemon src/app",
     "test": "mocha"
   },
   "keywords": [
