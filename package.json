@@ -1,15 +1,26 @@
 {
-  "name": "clipsync-test",
+  "name": "twitch-clip-vod-sync",
   "version": "1.0.0",
-  "description": "",
+  "description": "Synchronises a Twitch clip/VOD to another streamers VOD if that streamer was live at the exact moment in time of the respective clip/VOD.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "twitch",
+    "clip",
+    "vod",
+    "sync"
+  ],
+  "author": "Miguel Oliveira",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Miguel2597/twitch-clip-vod-sync.git"
+  },
+  "homepage": "https://github.com/Miguel2597/twitch-clip-vod-sync",
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
