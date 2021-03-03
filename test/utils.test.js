@@ -1,7 +1,7 @@
 const { assert } = require('chai')
 const utils = require('../src/utils')
 
-describe('utils.js tests', () => {
+describe('utils.js Tests', () => {
     describe('isClipUrlValid() Test', () => {
         it('should be equal to true', () => {
             const url = 'https://clips.twitch.tv/ShortPrettyMonkeyUncleNox-22NRB0sbsBMBA08N'

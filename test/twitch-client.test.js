@@ -1,8 +1,9 @@
 require('dotenv').config()
+require('./utils.test')
 const { assert } = require('chai')
 const twitchClient = require('../src/twitch-client')
 
-describe('twitch-client.js tests', () => {
+describe('twitch-client.js Tests', () => {
     describe('getStreamerInfo() Test', () => {
         it('should return the correct streamer info', async () => {
             const result = await twitchClient.getStreamerInfo('lirik')
