@@ -54,7 +54,7 @@ describe('utils.js tests', () => {
         })
 
         it('should be equal to false', () => {
-            const url = 'https://www.twitch.tv/videos?t=348m30'
+            const url = 'https://www.twitch.tv/videos/928480589?t=348m30'
             const result = utils.isVodUrlValid(url)
             assert.strictEqual(result, false)
         })
