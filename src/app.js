@@ -11,14 +11,13 @@ const app = express()
 
 app.get('/', async (req, res) => {
     try{
-
         const { url, username } = req.query
 
         // check if the url is valid
         if(!utils.isClipUrlValid(url) && !utils.isVodUrlValid(url)) throw new Error('Invalid url')
 
-        // validate access token
-        const access_token = await twitchAuth.validateToken()
+        // get an access token
+        const access_token = await twitchAuth.validateAccessToken()
 
         const client = new TwitchClient(access_token)
 
@@ -27,6 +26,7 @@ app.get('/', async (req, res) => {
         const finalVod = await client.getSyncedVod(streamerInfo, exactDate)
         
         res.json({ streamer: streamerInfo.display_name, vod: finalVod })
+
     }catch(err){
         res.json({ message: err.message })
     }
