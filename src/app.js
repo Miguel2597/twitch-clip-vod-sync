@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
         res.json({ streamer: streamerInfo.display_name, vod: finalVod })
 
     }catch(err){
-        res.json({ vod: err.message })
+        res.json({ message: err.message })
     }
 })
 

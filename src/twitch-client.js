@@ -84,7 +84,7 @@ class TwitchClient{
             return utils.addTimeToDate(new Date(vodStart), timeStampArr)
     
         }catch(err){
-            throw new Error('Clip does not exist or the VOD has been removed')
+            throw new Error('Clip does not exist or the VOD has been deleted')
         }
     }
 
