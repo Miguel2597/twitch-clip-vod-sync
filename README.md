@@ -22,7 +22,7 @@ The response will look something like this:
 ```
 
 ## Chrome extension
-This app also includes a chrome extension that provides a UI to make the above request.
+This app is also available as a chrome extension that provides a UI to make the above request.
 
 ![extension](chrome-extension/images/extension.gif)
 
