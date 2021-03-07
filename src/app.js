@@ -25,7 +25,11 @@ app.get('/', async (req, res) => {
         const exactDate = await client.getExactDate(url)
         const finalVod = await client.getSyncedVod(streamerInfo, exactDate)
         
-        res.json({ streamer: streamerInfo.display_name, vod: finalVod })
+        res.json({ 
+            streamer: streamerInfo.display_name,
+            streamer_profile_image: streamerInfo.profile_image_url,
+            vod: finalVod
+        })
 
     }catch(err){
         res.json({ message: err.message })

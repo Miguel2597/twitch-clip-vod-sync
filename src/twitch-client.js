@@ -35,9 +35,9 @@ class TwitchClient{
             // check if the user exists
             if(utils.isDataEmpty(userData.data.data)) throw new Error()
     
-            const { id, display_name } = userData.data.data[0]
+            const { id, display_name, profile_image_url } = userData.data.data[0]
     
-            return { id, display_name }
+            return { id, display_name, profile_image_url }
     
         }catch(err){
             throw new Error('User does not exist')
@@ -129,10 +129,7 @@ class TwitchClient{
     
             // if the date is in between the start and end dates return vod info
             if(exactDate.getTime() >= vodStart.getTime() && exactDate.getTime() <= vodEnd.getTime()){
-                return {
-                    url: vod.url,
-                    startDate: vodStart
-                }
+                return { url: vod.url, startDate: vodStart }
             }
         }
         return false
