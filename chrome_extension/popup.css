@@ -1,0 +1,123 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    background: #303030;
+    background-size: cover;
+    font-family: sans-serif;
+}
+
+.container{
+    width: 384px;
+    min-height: 180px;
+    color: white;
+}
+
+.image{
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+
+.title{
+    text-align: center;
+}
+
+.title h1{
+    font-size: 20px;
+}
+
+.textbox{
+    width: 90%;
+    margin-left: 5%;
+    overflow: hidden;
+    border-bottom: 1px #772ce8 solid ;
+    margin-bottom: 20px;
+    padding: 8px 0;
+}
+
+.textbox i{
+    width: 5%;
+    float: left;
+    text-align: center;
+    color: #772ce8;
+}
+
+.textbox input{
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 14px;
+    width: 90%;
+    float: left;
+    margin: 0 5px;
+}
+
+.btn{
+    color: white;
+    width: 45%;
+    margin-left: 27.5%;
+    background: none;
+    border: 2px #772ce8 solid;
+    border-radius: 25px;
+    padding: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.5s;
+    font-weight: bold;
+}
+
+.btn:focus{
+    outline: none;
+}
+
+.btn:hover{
+    background: #772ce8;
+}
+
+.spinner{
+    position: relative;
+    margin-left: 42%;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.loading-spinner{
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-top: 5px solid #772ce8;
+    border-right: 5px solid transparent;
+    animation: 1s spin infinite ease-in-out;
+}
+
+.result{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result a{
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+}
+
+.result a:hover{
+    color: #772ce8;
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(360deg);
+    }
+}
+

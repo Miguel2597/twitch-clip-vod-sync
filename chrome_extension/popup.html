@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch clip/VOD sync</title>
+    <link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+    <div class="container">
+        <img src="./images/icon128.png" alt="icon" class="image">
+        <div class='title'>
+            <h1>Twitch clip/VOD sync</h1>
+        </div>
+        <div class='textbox'>
+            <i class="fa fa-play" aria-hidden="true"></i>
+            <input id='myURL' type='text' name='' placeholder="Clip/VOD URL" value=''>
+        </div>
+
+        <div class='textbox'>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input id='myUsername' type='text' name='' placeholder="Streamer username" value=''>
+        </div>
+
+        <button class='btn' id='myBtn'>Find VOD</button>
+
+        <div id="mySpinner" class='spinner' style="display: none;">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <div id='myVod' class='result' style="display: none;"></div>
+            
+
+    </div>
+
+    <script src='popup.js'></script>
+</body>
+</html>
