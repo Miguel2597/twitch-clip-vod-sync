@@ -36,7 +36,6 @@ const fetchData = async () => {
         const data = await res.json()
 
         if(data.vod){
-            // myVod.innerHTML = + `<a href="${data.vod}" target="_blank" rel="noopener noreferrer">${data.vod}</a>`
             myImg.src = data.streamer_profile_image
             myPar.innerText = `${data.streamer}'s perspective:`
             myLink.href = data.vod
