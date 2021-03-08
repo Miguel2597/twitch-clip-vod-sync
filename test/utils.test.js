@@ -15,6 +15,30 @@ describe('utils.js Tests', () => {
             assert.strictEqual(result, true)
         })
 
+        it('should be equal to true', () => {
+            const url = 'https://www.twitch.tv/xqcow/clip/ShinyExcitedFriesGingerPower-V70aW8_AdxIwb4YC'
+            const result = utils.isClipUrlValid(url)
+            assert.strictEqual(result, true)
+        })
+
+        it('should be equal to true', () => {
+            const url = 'twitch.tv/xqcow/clip/ShinyExcitedFriesGingerPower-V70aW8_AdxIwb4YC'
+            const result = utils.isClipUrlValid(url)
+            assert.strictEqual(result, true)
+        })
+
+        it('should be equal to false', () => {
+            const url = 'https://twitch.tv/ShortPrettyMonkeyUncleNox-22NRB0sbsBMBA08N qwwqwq'
+            const result = utils.isClipUrlValid(url)
+            assert.strictEqual(result, false)
+        })
+
+        it('should be equal to false', () => {
+            const url = 'twitch.tv/xqcow/clip/ShinyExcitedFriesGingerPower-V70aW8_AdxIwb4YC/'
+            const result = utils.isClipUrlValid(url)
+            assert.strictEqual(result, false)
+        })
+
         it('should be equal to false', () => {
             const url = 'https://twitch.tv/ShortPrettyMonkeyUncleNox-22NRB0sbsBMBA08N'
             const result = utils.isClipUrlValid(url)

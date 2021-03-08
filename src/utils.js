@@ -1,5 +1,6 @@
 // check if a clip url matches the regex expression
-const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)$/.test(url)
+const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) || 
+                                /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
 
 // check if a vod url matches the regex expression
 const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h\d+m\d+s$/.test(url)

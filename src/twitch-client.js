@@ -49,7 +49,7 @@ class TwitchClient{
             const vod = {}
     
             // if url is a clip
-            if(url.includes('clips')){
+            if(url.includes('clip')){
                 // extract clip id from the url
                 const clipId = url.substring(url.lastIndexOf('/') + 1)
         
