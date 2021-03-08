@@ -32,6 +32,7 @@ Examples:
 ```
 https://clips.twitch.tv/ObliqueOddCougarFunRun-GF9H5eK6aSyFbT8U
 clips.twitch.tv/ObliqueOddCougarFunRun-GF9H5eK6aSyFbT8U
+twitch.tv/lirik/clip/EphemeralMuddyPanPeteZarollTie-D-ojcu-Nk40osS0S
 ```
 
 ## Valid VOD URLs
