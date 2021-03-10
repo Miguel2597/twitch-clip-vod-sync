@@ -22,7 +22,7 @@ The response will look something like this:
 ```
 
 ## Chrome extension
-This app is also available as a chrome extension that provides a UI to make the above request.
+This app is also available as a chrome extension. Get the extension [here](https://chrome.google.com/webstore/detail/twitch-clipvod-sync/iolfhmhipbbpacmhhffkjelgkadnffid).
 
 ![extension](chrome-extension/images/extension.gif)
 

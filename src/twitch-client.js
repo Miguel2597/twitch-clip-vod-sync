@@ -78,7 +78,7 @@ class TwitchClient{
             const vodStart = vodInfo.data.data[0]['created_at']
         
             // separate the vod timestamp hours, minutes, seconds into an array
-            const timeStampArr = vod.url.substring(vod.url.lastIndexOf('=') + 1).split(/\D+/).filter(e => e)
+            const timeStampArr = new URL(vod.url).searchParams.get('t').split(/\D+/).filter(e => e)
         
             // add the vod timestamp to the start date of the vod
             return utils.addTimeToDate(new Date(vodStart), timeStampArr)
