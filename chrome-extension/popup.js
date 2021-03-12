@@ -12,7 +12,17 @@ const myPar2 = document.getElementById('myPar2')
 document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         const url = tabs[0].url
-        if(isClipUrlValid(url) || isVodUrlValid(url)) myURL.value = url
+
+        if(isClipUrlValid(url)) myURL.value = url
+
+        if(isVodUrlValid(url)){
+            chrome.tabs.sendMessage(tabs[0].id, 'vodUrl', res => {
+                if(res){
+                    const timeStampArr = res.timestamp.split(':')
+                    myURL.value = url.match(/^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/\d+([^\D]+)/g) + `?t=${timeStampArr[0]}h${timeStampArr[1]}m${timeStampArr[2]}s`
+                }
+            })
+        }
     })
 
     myBtn.addEventListener("click", fetchData);
@@ -21,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) || 
                                 /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
 
-const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h\d+m\d+s$/.test(url)
+const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/([^\/\s]+)$/.test(url)
 
 const fetchData = async () => {
     myError.style.display = 'none'
