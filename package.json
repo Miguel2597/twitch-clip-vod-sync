@@ -15,7 +15,6 @@
     "sync"
   ],
   "author": "Miguel Oliveira",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Miguel2597/twitch-clip-vod-sync.git"
