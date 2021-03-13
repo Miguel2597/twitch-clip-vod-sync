@@ -39,6 +39,7 @@ app.get('/', async (req, res) => {
 const port = PORT || 3000
 
 mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+.catch(err => console.log(err))
 
 const db = mongoose.connection;
 

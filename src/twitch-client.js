@@ -40,7 +40,7 @@ class TwitchClient{
             return { id, display_name, profile_image_url }
     
         }catch(err){
-            throw new Error('User does not exist')
+            throw new Error('The specified username does not exist')
         }
     }
 
@@ -60,7 +60,7 @@ class TwitchClient{
                 const vodData = clipData.data.vod
         
                 // Check if the vod still exists
-                if(!vodData) throw new Error()
+                if(!vodData) throw new Error('The VOD for this clip has been deleted')
         
                 vod.id = vodData.id
                 vod.url = vodData.url
@@ -73,18 +73,26 @@ class TwitchClient{
         
             // send request to /videos endpoint to get the data for the specified vod id
             const vodInfo = await this.instance.get(`/videos?id=${vod.id}`)
+
+            // separate the vod timestamp hours, minutes, seconds into an array
+            const timestamp = new URL(vod.url).searchParams.get('t').split(/\D+/).filter(e => e)
+
+            // get the vod duration
+            const duration = vodInfo.data.data[0].duration.split(/\D+/).filter(e => e)
+            
+            // if timestamp in the url > duration of the vod, invalid timestamp
+            if(utils.addTimeToDate(new Date(), timestamp) > utils.addTimeToDate(new Date(), duration)) throw new Error('The VOD timestamp cannot be bigger than the vod duration')
         
             // get the vod start date
             const vodStart = vodInfo.data.data[0]['created_at']
         
-            // separate the vod timestamp hours, minutes, seconds into an array
-            const timeStampArr = new URL(vod.url).searchParams.get('t').split(/\D+/).filter(e => e)
-        
             // add the vod timestamp to the start date of the vod
-            return utils.addTimeToDate(new Date(vodStart), timeStampArr)
+            return utils.addTimeToDate(new Date(vodStart), timestamp)
     
         }catch(err){
-            throw new Error('Clip does not exist or the VOD has been deleted')
+            if(err.isAxiosError) throw new Error('Clip does not exist')
+            
+            throw err
         }
     }
 
@@ -103,7 +111,7 @@ class TwitchClient{
             let vod = this.findVod(vodsData.data.data, exactDate)
     
             // check if a vod is found
-            if(!vod) throw new Error(`${streamerInfo.display_name} was not streaming at the time of the clip/VOD or the VOD was deleted`)
+            if(!vod) throw new Error(`${streamerInfo.display_name} was not streaming at the time of the clip/VOD or the VOD has been deleted`)
     
             // calculate the difference between the date and the vod start date
             const { h, m, s } = utils.dateDiff(exactDate, vod.startDate)
@@ -119,13 +127,13 @@ class TwitchClient{
     findVod(vods, exactDate){
         for(let vod of vods){
             // separate duration hours, minutes, seconds into an array
-            const hoursArr = vod.duration.split(/\D+/).filter(e => e)
+            const duration = vod.duration.split(/\D+/).filter(e => e)
     
             // get the vod start date
             const vodStart = new Date(vod['created_at'])
     
             // get the vod end date
-            const vodEnd = utils.addTimeToDate(vodStart, hoursArr)
+            const vodEnd = utils.addTimeToDate(vodStart, duration)
     
             // if the date is in between the start and end dates return vod info
             if(exactDate.getTime() >= vodStart.getTime() && exactDate.getTime() <= vodEnd.getTime()){
