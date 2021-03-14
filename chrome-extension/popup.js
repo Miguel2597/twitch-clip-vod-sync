@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isClipUrlValid(url)) myURL.value = url
 
         if(isVodUrlValid(url)){
-            chrome.tabs.sendMessage(tabs[0].id, 'vodUrl', res => {
-                if(res){
-                    const timeStampArr = res.timestamp.split(':')
-                    myURL.value = url.match(/^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/\d+([^\D]+)/g) + `?t=${timeStampArr[0]}h${timeStampArr[1]}m${timeStampArr[2]}s`
-                }
+            const port = chrome.tabs.connect(tabs[0].id)
+            port.postMessage('vodUrl')
+            port.onMessage.addListener(res => {
+                const timestamp = res.timestamp.split(':')
+                myURL.value = url.match(/^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/\d+([^\D]+)/g) + `?t=${timestamp[0]}h${timestamp[1]}m${timestamp[2]}s`
             })
         }
     })

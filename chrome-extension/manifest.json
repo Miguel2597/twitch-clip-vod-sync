@@ -10,7 +10,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*.twitch.tv/videos/*"],
+            "matches": ["*://*.twitch.tv/*"],
             "js": ["content.js"]
         }
     ],

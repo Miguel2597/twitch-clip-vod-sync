@@ -1,8 +1,8 @@
-chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-    if(request === 'vodUrl' && document.querySelector('[data-a-target="player-seekbar-current-time"]')){
-        const element = document.querySelector('[data-a-target="player-seekbar-current-time"]')
-        sendResponse({ timestamp: element.innerText })
-    }else{
-        sendResponse()
-    }
+chrome.runtime.onConnect.addListener(port => {
+    port.onMessage.addListener(msg => {
+        if(msg === 'vodUrl'){
+            const element = document.querySelector('[data-a-target="player-seekbar-current-time"]')
+            port.postMessage({ timestamp: element.innerText })
+        }
+    })
 })
