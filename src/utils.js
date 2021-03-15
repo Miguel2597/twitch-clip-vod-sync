@@ -1,12 +1,12 @@
 // check if a clip url matches the regex expression
-const isClipUrlValid = (url) => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) || 
+const isClipUrlValid = url => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) || 
                                 /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
 
 // check if a vod url matches the regex expression
-const isVodUrlValid = (url) => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h[0-5]?[0-9]m[0-5]?[0-9]s$/.test(url)
+const isVodUrlValid = url => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/(\S+)\?t=\d+h[0-5]?[0-9]m[0-5]?[0-9]s$/.test(url)
 
 // check if array is empty
-const isDataEmpty = (data) => data.length === 0
+const isDataEmpty = data => data.length === 0
 
 // Adds hours, minutes and seconds to a date and returns a new Date object 
 const addTimeToDate = (date, arr) => {
@@ -31,6 +31,6 @@ const dateDiff = (date1, date2) => {
 }
 
 // convert hours to days
-const hoursToDays = (hours) => Math.floor(hours / 24)
+const hoursToDays = hours => Math.floor(hours / 24)
 
 module.exports = { isClipUrlValid, isVodUrlValid, isDataEmpty, addTimeToDate, dateDiff, hoursToDays }

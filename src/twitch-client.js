@@ -99,8 +99,8 @@ class TwitchClient{
     async getSyncedVod(streamerInfo, exactDate){
         try{
             // calculate the difference between today's date and the date of the clip/vod so the request only returns the needed number of vods
-            // add + 3 just in case the streamer has more than 1 vod per day
-            const firstVods = utils.hoursToDays(utils.dateDiff(new Date(), exactDate).h) + 3
+            // add + 5 just in case the streamer has more than 1 vod per day
+            const firstVods = utils.hoursToDays(utils.dateDiff(new Date(), exactDate).h) + 5
     
             // send request to /videos endpoint to get the the VODs for the specified streamer
             const vodsData = await this.instance.get(`/videos?user_id=${streamerInfo.id}&first=${firstVods}&type=archive`)
@@ -108,7 +108,7 @@ class TwitchClient{
             // check if the streamer has any vods
             if(utils.isDataEmpty(vodsData.data.data)) throw new Error(`${streamerInfo.display_name} does not have any available VODs`)
     
-            let vod = this.findVod(vodsData.data.data, exactDate)
+            const vod = this.findVod(vodsData.data.data, exactDate)
     
             // check if a vod is found
             if(!vod) throw new Error(`${streamerInfo.display_name} was not streaming at the time of the clip/VOD or the VOD has been deleted`)
