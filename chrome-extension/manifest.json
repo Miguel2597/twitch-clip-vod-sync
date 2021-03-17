@@ -12,5 +12,5 @@
         "default_popup": "popup.html",
         "default_title": "Twitch clip/VOD sync"
     },
-    "permissions": ["activeTab", "*://*.herokuapp.com/*"]
+    "permissions": ["activeTab"]
 }
