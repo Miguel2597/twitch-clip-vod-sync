@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
+
 const TwitchClient = require('./twitch-client')
 const twitchAuth = require('./twitch-auth')
 const utils = require('./utils')
