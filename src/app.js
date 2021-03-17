@@ -10,6 +10,7 @@ const utils = require('./utils')
 const { PORT, MONGO_DB } = process.env
 
 const app = express()
+app.use(cors())
 
 app.get('/', async (req, res) => {
     try{
