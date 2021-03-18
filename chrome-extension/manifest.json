@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Twitch clip/VOD sync",
     "description": "Synchronises a Twitch clip/VOD to another streamers VOD if that streamer was live at the exact moment in time of the clip/VOD.",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "icons": {
         "16": "./images/icon16.png",
         "48": "./images/icon48.png",
