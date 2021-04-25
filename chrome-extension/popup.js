@@ -28,9 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     myBtn.addEventListener("click", fetchData);
+    myURL.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        myBtn.click();
+      }
+    })
+    myUsername.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        myBtn.click();
+      }
+    })
 })
 
-const isClipUrlValid = url => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) || 
+const isClipUrlValid = url => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) ||
                                 /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
 
 const isVodUrlValid = url => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/([^\/\s]+)$/.test(url)
@@ -58,7 +68,7 @@ const fetchData = async () => {
             myPar2.innerText = data.message
             myError.style.display = 'block'
         }
-        
+
         mySpinner.style.display = 'none'
         myBtn.style.display = 'block'
 
