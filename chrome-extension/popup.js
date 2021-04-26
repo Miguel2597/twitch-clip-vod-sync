@@ -27,21 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    myBtn.addEventListener("click", fetchData);
-    myURL.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-        myBtn.click();
-      }
+    myBtn.addEventListener("click", fetchData)
+
+    myURL.addEventListener("keyup", event => {
+      if (event.key === 'Enter') myBtn.click()
     })
-    myUsername.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-        myBtn.click();
-      }
+
+    myUsername.addEventListener("keyup", event => {
+      if (event.key === 'Enter') myBtn.click()
     })
+    
 })
 
 const isClipUrlValid = url => /^(?:https:\/\/)?clips\.twitch\.tv\/([^\/\s]+)$/.test(url) ||
-                                /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
+                              /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/(\S+)\/clip\/([^\/\s]+)$/.test(url)
 
 const isVodUrlValid = url => /^(?:https:\/\/)?(?:www\.)?twitch\.tv\/videos\/([^\/\s]+)$/.test(url)
 
