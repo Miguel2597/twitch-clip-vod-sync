@@ -3,7 +3,7 @@ Synchronises a Twitch clip/VOD to another streamers VOD if that streamer was liv
 
 You can use this extension anywhere as long as you provide a valid clip/VOD URL. If you have a clip/VOD open in your current tab, the extension will automatically fill in the URL field for you.
 
-Get the chrome extension [here](https://chrome.google.com/webstore/detail/twitch-clipvod-sync/iolfhmhipbbpacmhhffkjelgkadnffid).
+Download the extension for [Chrome](https://chrome.google.com/webstore/detail/twitch-clipvod-sync/iolfhmhipbbpacmhhffkjelgkadnffid) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/twitch-clip-vod-sync).
 
 ![extension](chrome-extension/images/extension.gif)
 
