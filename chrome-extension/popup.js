@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isClipUrlValid(url)) myURL.value = url
 
         if(isVodUrlValid(url)){
-            chrome.tabs.executeScript(null, { file: 'content.js' }, () => {
+            chrome.scripting.executeScript({
+                target: {tabId: tabs[0].id},
+                files: ['content.js']
+            }, () => {
                 const port = chrome.tabs.connect(tabs[0].id)
                 port.postMessage('vodUrl')
                 port.onMessage.addListener(res => {
@@ -54,7 +57,9 @@ const fetchData = async () => {
     const username = myUsername.value
 
     try{
-        const res = await fetch(`https://twitch-clip-vod-sync.herokuapp.com?url=${url}&username=${username}`)
+        var domainUrl = 'https://twitch-clip-vod-sync.herokuapp.com'
+        domainUrl = 'http://localhost:8000'
+        const res = await fetch(domainUrl+`?url=${url}&username=${username}`)
         const data = await res.json()
 
         if(data.vod){
