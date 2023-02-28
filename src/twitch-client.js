@@ -1,7 +1,7 @@
 const axios = require('axios')
 const utils = require('./utils')
 
-const { TWITCH_API_URL, OLD_TWITCH_API_URL, CLIENT_ID } = process.env
+const { TWITCH_API_URL, CLIENT_ID } = process.env
 
 class TwitchClient{
     constructor(access_token){
@@ -13,16 +13,6 @@ class TwitchClient{
             headers: {
                 'Authorization': `Bearer ${this.access_token}`,
                 'Client-Id': CLIENT_ID
-            }
-        })
-
-        // create another axios instance to use the old twitch api to get a vod timestamp through a clip
-        // the new twitch api does not provide this info
-        this.instance2 = axios.create({
-            baseURL: OLD_TWITCH_API_URL,
-            headers: {
-                'Accept': 'application/vnd.twitchtv.v5+json',
-                'Client-ID': CLIENT_ID
             }
         })
     }
