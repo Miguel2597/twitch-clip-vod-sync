@@ -50,7 +50,7 @@ class TwitchClient{
     
             // if url is a clip
             if(url.includes('clip')){
-                // extract clip id from the url
+                url = url.split(/[?#]/)[0]
                 const clipId = url.substring(url.lastIndexOf('/') + 1)
         
                 // send request to /clips endpoint to get the data for the specified clip id
