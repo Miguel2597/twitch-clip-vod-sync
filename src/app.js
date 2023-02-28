@@ -15,7 +15,6 @@ app.use(cors())
 app.get('/', async (req, res) => {
     try{
         const { url, username } = req.query
-
         // check if the url is valid
         if(!utils.isClipUrlValid(url) && !utils.isVodUrlValid(url)) throw new Error('Invalid clip/VOD URL')
 

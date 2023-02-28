@@ -1,7 +1,7 @@
 const axios = require('axios')
 const utils = require('./utils')
 
-const { TWITCH_API_URL, OLD_TWITCH_API_URL, CLIENT_ID } = process.env
+const { TWITCH_API_URL, CLIENT_ID } = process.env
 
 class TwitchClient{
     constructor(access_token){
@@ -13,16 +13,6 @@ class TwitchClient{
             headers: {
                 'Authorization': `Bearer ${this.access_token}`,
                 'Client-Id': CLIENT_ID
-            }
-        })
-
-        // create another axios instance to use the old twitch api to get a vod timestamp through a clip
-        // the new twitch api does not provide this info
-        this.instance2 = axios.create({
-            baseURL: OLD_TWITCH_API_URL,
-            headers: {
-                'Accept': 'application/vnd.twitchtv.v5+json',
-                'Client-ID': CLIENT_ID
             }
         })
     }
@@ -50,20 +40,28 @@ class TwitchClient{
     
             // if url is a clip
             if(url.includes('clip')){
-                // extract clip id from the url
+                url = url.split(/[?#]/)[0]
                 const clipId = url.substring(url.lastIndexOf('/') + 1)
         
                 // send request to /clips endpoint to get the data for the specified clip id
-                const clipData = await this.instance2.get(`/clips/${clipId}`)
+                var clipData = await this.instance.get(`/clips?id=${clipId}`)
+
+                
+
+                clipData = clipData.data.data[0]
         
                 // get the vod
-                const vodData = clipData.data.vod
+                const videoId = clipData.video_id
         
                 // Check if the vod still exists
-                if(!vodData) throw new Error('The VOD for this clip has been deleted')
+                if(!videoId) throw new Error('The VOD for this clip has been deleted')
         
-                vod.id = vodData.id
-                vod.url = vodData.url
+                vod.id = videoId
+                if(clipData.vod_offset){
+                    vod.timeOffset = clipData.vod_offset
+                }else{
+                    vod.timeOffset = 0
+                }
         
             }else{
                 // extract vod id from the url
@@ -74,20 +72,34 @@ class TwitchClient{
             // send request to /videos endpoint to get the data for the specified vod id
             const vodInfo = await this.instance.get(`/videos?id=${vod.id}`)
 
-            // separate the vod timestamp hours, minutes, seconds into an array
-            const timestamp = new URL(vod.url).searchParams.get('t').split(/\D+/).filter(e => e)
+            // get the vod start date
+            const vodStart = vodInfo.data.data[0]['created_at']
 
             // get the vod duration
             const duration = vodInfo.data.data[0].duration.split(/\D+/).filter(e => e)
+
+            if(vod.timeOffset){
+                var t = new Date(vodStart);
+                t.setSeconds(t.getSeconds() + vod.timeOffset);
+                return t
+            }
+
+            else{
+                // separate the vod timestamp hours, minutes, seconds into an array
+                const timestamp = new URL(vod.url).searchParams.get('t').split(/\D+/).filter(e => e)
+
+                
+                
+                // if timestamp in the url > duration of the vod, invalid timestamp
+                if(utils.addTimeToDate(new Date(), timestamp) > utils.addTimeToDate(new Date(), duration)) throw new Error('The VOD timestamp cannot be bigger than the vod duration')
             
-            // if timestamp in the url > duration of the vod, invalid timestamp
-            if(utils.addTimeToDate(new Date(), timestamp) > utils.addTimeToDate(new Date(), duration)) throw new Error('The VOD timestamp cannot be bigger than the vod duration')
-        
-            // get the vod start date
-            const vodStart = vodInfo.data.data[0]['created_at']
-        
-            // add the vod timestamp to the start date of the vod
-            return utils.addTimeToDate(new Date(vodStart), timestamp)
+                
+            
+                // add the vod timestamp to the start date of the vod
+                return utils.addTimeToDate(new Date(vodStart), timestamp)
+            }
+
+            
     
         }catch(err){
             if(err.isAxiosError) throw new Error('Clip does not exist')
