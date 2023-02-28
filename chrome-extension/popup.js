@@ -57,8 +57,8 @@ const fetchData = async () => {
     const username = myUsername.value
 
     try{
-        var domainUrl = 'https://twitch-clip-vod-sync.herokuapp.com'
-        domainUrl = 'http://localhost:8000'
+        // var domainUrl = 'https://twitch-clip-vod-sync.herokuapp.com'
+        var domainUrl = 'https://twitch-clip-vod-sync-production.up.railway.app/'
         const res = await fetch(domainUrl+`?url=${url}&username=${username}`)
         const data = await res.json()
 
